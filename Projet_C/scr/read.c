@@ -93,26 +93,19 @@ int Sauvegarder_Score (Jeu* jeu){
     char listeNoms[10][4];
     int classement = 10;
     for (int i = 0; i < 10; i ++){
-        printf("%d ", i);
-        fgets (listeNoms [i], 5, fichier);
-        fscanf(fichier, " %d\n", &listeScores[i]);
-        printf("%d ", listeScores[i]);
+        fscanf(fichier, "%3s %d\n", &listeNoms[i], &listeScores[i]);
         if (listeScores[i] < jeu->score && classement == 10)
-        printf("45");
             classement = i;
     }
-    printf("2 ");
-    printf("%d ", classement);
     if (classement < 10){
         listeScores[classement] = jeu->score;
-        printf ("Bravo vous etes %d au classement ! Entrez votre nom (trois lettres majuscules) ->", classement);
+        printf ("Bravo vous etes %d au classement ! Entrez votre nom (trois lettres majuscules) ->", classement + 1);
         scanf ("%s", listeNoms[classement]);
         fclose (fichier);
         FILE *fichier = fopen(jeu->niveau->meilleursScores, "w");
         for (int i = 0; i < 10; i ++)
-            fprintf(fichier, "%s %d", listeNoms[i], listeScores[i]);
+            fprintf(fichier, "%s %d\n", listeNoms[i], listeScores[i]);
     }
-    printf("3");
     fclose (fichier);
     return 1;
 }
